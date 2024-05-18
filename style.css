@@ -1,0 +1,23 @@
+
+.field {
+    
+    width: 455px;
+    height: 455px;
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.field > div {
+    width: 150px;
+    height: 150px;
+    background: orange;
+    display: block;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 10rem;
+    line-height: 126px;
+}
+.field > div.active {
+    background: yellow ;
+}
