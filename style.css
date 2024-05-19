@@ -18,7 +18,7 @@ body, html {
 
 .info {
   background-color: #f4f4f4;
-  padding: 20px;
+  padding: 0 40px;
   border-radius: 10px;
   text-align: left;
   flex: 1;
@@ -54,9 +54,7 @@ body, html {
   background: #f8ff6b;
 }
 
-h1, h2 {
-  padding: 0 20px;
-}
+
 
 @media (max-width: 600px) {
   .container {
@@ -71,6 +69,7 @@ h1, h2 {
 }
 
 #message {
+  background-color: rgb(183, 255, 255);
   transition: background-color 0.5s ease, padding 0.5s ease;
   border-radius: 50px;
   padding: 20px; 
