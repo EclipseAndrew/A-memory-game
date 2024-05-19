@@ -30,10 +30,10 @@ const fieldInit = () => {
       .querySelectorAll(".field > div")
       .forEach((item) => (item.textContent = ""));
     document.addEventListener("keydown", pressKey);
-    // Add mouse and touch event listeners
+    
     document.querySelectorAll(".field > div").forEach((block, index) => {
       block.addEventListener("click", () => handleClick(index));
-      block.addEventListener("touchstart", () => handleClick(index)); // Touch support
+      block.addEventListener("touchstart", () => handleClick(index)); 
     });
   }, 5000);
 };
