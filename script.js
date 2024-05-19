@@ -1,6 +1,3 @@
-// document.addEventListener("keydown", function(event){
-//     console.log(event.key)
-// });
 let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 arr = arr.sort((a, b) => 0.5 - Math.random());
 console.log(arr);
@@ -8,6 +5,16 @@ let x = 0;
 let y = 0;
 let step = 1;
 let error = 0;
+
+const updateStatus = () => {
+  document.getElementById('steps').textContent = step - 1;
+  document.getElementById('errors').textContent = error;
+  document.getElementById('status').textContent = error < 3 ? 'Гра триває' : 'Ви програли';
+};
+
+const updateMessage = (message) => {
+  document.getElementById('message').textContent = message;
+};
 
 const fieldInit = () => {
   for (let i = 0; i < 3; i++) {
@@ -23,8 +30,14 @@ const fieldInit = () => {
       .querySelectorAll(".field > div")
       .forEach((item) => (item.textContent = ""));
     document.addEventListener("keydown", pressKey);
+    // Add mouse and touch event listeners
+    document.querySelectorAll(".field > div").forEach((block, index) => {
+      block.addEventListener("click", () => handleClick(index));
+      block.addEventListener("touchstart", () => handleClick(index)); // Touch support
+    });
   }, 5000);
 };
+
 fieldInit();
 
 const blocks = document.querySelectorAll(".field > div");
@@ -61,19 +74,58 @@ function pressKey(event) {
       if (arr[y * 3 + x] === step) {
         blocks[y * 3 + x].textContent = arr[y * 3 + x];
         step++;
+        updateMessage('Правильно!');
       } else {
-        alert("error");
+        updateMessage('Помилка!');
         error++;
       }
-
       break;
   }
+
   blocks[y * 3 + x].classList.add("active");
+  updateStatus();
+
   if (error == 3) {
-    alert("lose");
-    location.reload();
+    updateMessage('Ви програли!');
+    setTimeout(() => location.reload(), 2000);
   }
-  if(step === 10) {alert('win')
-    location.reload()
+
+  if (step === 10) {
+    updateMessage('Ви виграли!');
+    setTimeout(() => location.reload(), 2000);
   }
 }
+
+// Доданий код для обробки кліків миші та дотиків
+function handleClick(index) {
+  const newX = index % 3;
+  const newY = Math.floor(index / 3);
+
+  blocks[y * 3 + x].classList.remove("active");
+  x = newX;
+  y = newY;
+
+  blocks[y * 3 + x].classList.add("active");
+
+  if (arr[y * 3 + x] === step) {
+    blocks[y * 3 + x].textContent = arr[y * 3 + x];
+    step++;
+    updateMessage('Правильно!');
+  } else {
+    updateMessage('Помилка!');
+    error++;
+  }
+
+  updateStatus();
+
+  if (error == 3) {
+    updateMessage('Ви програли!');
+    setTimeout(() => location.reload(), 2000);
+  }
+
+  if (step === 10) {
+    updateMessage('Ви виграли!');
+    setTimeout(() => location.reload(), 2000);
+  }
+}
+
