@@ -12,6 +12,10 @@ const updateStatus = () => {
   document.getElementById('status').textContent = error < 3 ? 'Гра триває' : 'Ви програли';
 };
 
+const updateMessageStyle = (style) => {
+  document.getElementById('message').style.backgroundColor = style;
+};
+
 const updateMessage = (message) => {
   document.getElementById('message').textContent = message;
 };
@@ -26,15 +30,19 @@ const fieldInit = () => {
     }
   }
   setTimeout(() => {
-    document
-      .querySelectorAll(".field > div")
-      .forEach((item) => (item.textContent = ""));
+    document.querySelectorAll(".field > div").forEach((item) => (item.textContent = ""));
     document.addEventListener("keydown", pressKey);
+
     
-    document.querySelectorAll(".field > div").forEach((block, index) => {
-      block.addEventListener("click", () => handleClick(index));
-      block.addEventListener("touchstart", () => handleClick(index)); 
-    });
+    if ('ontouchstart' in window) {
+      document.querySelectorAll(".field > div").forEach((block, index) => {
+        block.addEventListener("touchstart", () => handleClick(index)); 
+      });
+    } else {
+      document.querySelectorAll(".field > div").forEach((block, index) => {
+        block.addEventListener("click", () => handleClick(index)); 
+      });
+    }
   }, 5000);
 };
 
@@ -87,16 +95,18 @@ function pressKey(event) {
 
   if (error == 3) {
     updateMessage('Ви програли!');
+    updateMessageStyle("#ff6d6d");
     setTimeout(() => location.reload(), 2000);
   }
 
   if (step === 10) {
     updateMessage('Ви виграли!');
+    updateMessageStyle("#46f243")
     setTimeout(() => location.reload(), 2000);
   }
 }
 
-// Доданий код для обробки кліків миші та дотиків
+
 function handleClick(index) {
   const newX = index % 3;
   const newY = Math.floor(index / 3);
@@ -120,11 +130,13 @@ function handleClick(index) {
 
   if (error == 3) {
     updateMessage('Ви програли!');
+    updateMessageStyle("#ff6d6d");
     setTimeout(() => location.reload(), 2000);
   }
 
   if (step === 10) {
     updateMessage('Ви виграли!');
+    updateMessageStyle("#46f243");
     setTimeout(() => location.reload(), 2000);
   }
 }
